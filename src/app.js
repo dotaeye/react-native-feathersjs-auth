@@ -12,13 +12,24 @@ import SplashScreen from "react-native-splash-screen";
 import { StackNavigator } from "react-navigation";
 import Client from "./utils/Client";
 import * as socketActions from "./actions/socket";
-import { Main } from "./screens";
+import * as screens from "./screens";
+
+const HomeNavigator = StackNavigator({
+  Home: { screen: screens.Home }
+});
 
 const MainNavigator = StackNavigator(
   {
-    Main: { screen: Main }
+    Main: { screen: screens.Main },
+    Register: { screen: screens.Register },
+    Login: { screen: screens.Login },
+    CodeLogin: { screen: screens.CodeLogin },
+    ForgetPassword: { screen: screens.ForgetPassword },
+    Home: {
+      screen: HomeNavigator
+    }
   },
-  { mode: "modal", headerMode: "none" }
+  { headerMode: "none" }
 );
 
 class App extends Component {

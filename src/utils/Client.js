@@ -12,7 +12,7 @@ const options = {
   pingInterval: 5000
 };
 
-const socket = io(API.apiRoot, options);
+const socket = io(API.ROOT, options);
 
 const client = feathers();
 

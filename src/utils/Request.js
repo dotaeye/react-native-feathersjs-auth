@@ -1,4 +1,4 @@
-import { API } from "../config";
+import { API } from "../configs";
 import Storage from "./Storage";
 
 const methods = ["get", "post", "put", "patch", "delete"];
@@ -7,7 +7,7 @@ const timeout = 15000;
 
 function formatUrl(path) {
   let adjustedPath = path[0] !== "/" ? "/" + path : path;
-  adjustedPath = API.apiRoot + adjustedPath;
+  adjustedPath = API.ROOT + adjustedPath;
   return adjustedPath;
 }
 

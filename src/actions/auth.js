@@ -4,8 +4,6 @@ export const types = {
   LOGIN_FAIL: "LOGIN_FAIL",
 
   LOGOUT_START: "LOGOUT_START",
-  LOGOUT_SUCCESS: "LOGOUT_SUCCESS",
-  LOGOUT_FAIL: "LOGOUT_FAIL",
 
   REGISTER_START: "REGISTER_START",
   REGISTER_SUCCESS: "REGISTER_SUCCESS",
@@ -27,3 +25,38 @@ export const types = {
   VERIFICATION_CODE_SUCCESS: "VERIFICATION_CODE_SUCCESS",
   VERIFICATION_CODE_FAIL: "VERIFICATION_CODE_FAIL"
 };
+
+export function register(payload) {
+  return {
+    type: types.REGISTER_START,
+    payload
+  };
+}
+
+export function verificationCode(payload) {
+  return {
+    type: types.VERIFICATION_CODE_START,
+    payload
+  };
+}
+
+export function login(payload) {
+  return {
+    type: types.LOGIN_START,
+    payload
+  };
+}
+
+export function logout(payload) {
+  return {
+    type: types.LOGOUT_START,
+    payload
+  };
+}
+
+export function forgetPassword(payload) {
+  return {
+    type: types.FORGET_PASSWORD_START,
+    payload
+  };
+}

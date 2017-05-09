@@ -12,11 +12,10 @@ export default function user(state = initialAuthState, action = {}) {
         ...state,
         loggingIn: true
       };
-
     case types.LOGIN_SUCCESS:
       return {
         ...state,
-        user: payload,
+        token: payload,
         loggingIn: false
       };
     case types.LOGIN_FAIL:
@@ -24,7 +23,36 @@ export default function user(state = initialAuthState, action = {}) {
         ...state,
         loggingIn: false
       };
-
+    case types.REGISTER_START:
+      return {
+        ...state,
+        registering: true
+      };
+    case types.REGISTER_SUCCESS:
+      return {
+        ...state,
+        registering: false
+      };
+    case types.REGISTER_FAIL:
+      return {
+        ...state,
+        registering: false
+      };
+    case types.FORGET_PASSWORD_START:
+      return {
+        ...state,
+        forgetting: true
+      };
+    case types.FORGET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        forgetting: false
+      };
+    case types.FORGET_PASSWORD_FAIL:
+      return {
+        ...state,
+        forgetting: false
+      };
     default:
       return state;
   }

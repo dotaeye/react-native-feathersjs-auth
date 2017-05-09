@@ -9,7 +9,7 @@ export function connect() {
   };
 }
 
-export function disConnect() {
+export function disconnect() {
   return {
     type: types.DISCONNECT
   };
