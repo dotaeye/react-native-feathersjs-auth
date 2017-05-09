@@ -1,9 +1,18 @@
 export const API = {
+  ROOT: "http://localhost:3030"
+};
+
+export const STORAGE = {
   // 数据存储的key集合
-  storageKey: {
-    city: "city"
+  STORAGE_KEY: {
+    CITY: "CITY"
   },
-  // token存储的key
-  tokenKey: "token",
-  apiRoot: "http://localhost:3030"
+  // TOKEN存储的KEY
+  TOKEN_KEY: "TOKEN"
+};
+
+export const VERIFICATION_STATUS = {
+  LOGIN: 1,
+  REGISTER: 2,
+  FORGET: 3
 };

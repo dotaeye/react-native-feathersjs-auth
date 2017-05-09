@@ -21,7 +21,7 @@ class Storage {
     });
   }
 
-  static delete(key) {
+  static remove(key) {
     return AsyncStorage.removeItem(key);
   }
 }
