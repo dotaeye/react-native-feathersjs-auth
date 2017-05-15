@@ -67,12 +67,6 @@ class ForgetPassword extends React.Component {
     this.props.form.validateFields((error, value) => {
       console.log(error, value);
       this.props.authActions.forgetPassword({
-        success: () => {
-          navigate("Login");
-        },
-        fail: err => {
-          console.log(err);
-        },
         data: {
           action: "forgetPassword",
           ...value

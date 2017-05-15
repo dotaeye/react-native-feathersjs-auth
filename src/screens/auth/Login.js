@@ -49,13 +49,6 @@ class Login extends React.Component {
     this.props.form.validateFields((error, value) => {
       console.log(error, value);
       this.props.authActions.login({
-        success: () => {
-          navigate("Home");
-          console.log("login success");
-        },
-        fail: err => {
-          console.log(err);
-        },
         data: {
           strategy: "local",
           type: "password",

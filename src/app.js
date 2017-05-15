@@ -9,28 +9,12 @@ import { StyleSheet, Text, View } from "react-native";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import SplashScreen from "react-native-splash-screen";
-import { StackNavigator } from "react-navigation";
+import { NavigationActions } from "react-navigation";
 import Client from "./utils/Client";
 import * as socketActions from "./actions/socket";
-import * as screens from "./screens";
-
-const HomeNavigator = StackNavigator({
-  Home: { screen: screens.Home }
-});
-
-const MainNavigator = StackNavigator(
-  {
-    Main: { screen: screens.Main },
-    Register: { screen: screens.Register },
-    Login: { screen: screens.Login },
-    CodeLogin: { screen: screens.CodeLogin },
-    ForgetPassword: { screen: screens.ForgetPassword },
-    Home: {
-      screen: HomeNavigator
-    }
-  },
-  { headerMode: "none" }
-);
+import Navigator from "./navigator";
+import Storage from "./utils/Storage";
+import { STORAGE } from "./configs";
 
 class App extends Component {
   constructor(props) {
@@ -43,12 +27,30 @@ class App extends Component {
     });
   }
 
-  componentDidMount() {
-    // do anything while splash screen keeps, use await to wait for an async task.
-    SplashScreen.hide();
+  state = {
+    initialized: false,
+    login: false
+  };
+
+  async componentDidMount() {
+    let mainPage = "Main";
+    try {
+      const auth = await Client.authenticate();
+      mainPage = "Home";
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(mainPage);
+    this.props.initRoute(mainPage);
+    this.setState({ initialized: true }, () => {
+      SplashScreen.hide();
+    });
   }
+
   render() {
-    return <MainNavigator />;
+    const { initialized } = this.state;
+    if (!initialized) return null;
+    return <Navigator />;
   }
 }
 
@@ -66,7 +68,13 @@ export default connect(
     socket: state.socket
   }),
   dispatch => ({
-    socketActions: bindActionCreators(socketActions, dispatch)
+    socketActions: bindActionCreators(socketActions, dispatch),
+    initRoute: routeName =>
+      dispatch(
+        NavigationActions.navigate({
+          routeName
+        })
+      )
   }),
   null,
   {

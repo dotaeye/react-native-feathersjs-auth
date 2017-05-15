@@ -21,9 +21,7 @@ export const types = {
   FORGET_PASSWORD_SUCCESS: "FORGET_PASSWORD_SUCCESS",
   FORGET_PASSWORD_FAIL: "FORGET_PASSWORD_FAIL",
 
-  VERIFICATION_CODE_START: "VERIFICATION_CODE_START",
-  VERIFICATION_CODE_SUCCESS: "VERIFICATION_CODE_SUCCESS",
-  VERIFICATION_CODE_FAIL: "VERIFICATION_CODE_FAIL"
+  VERIFICATION_CODE_START: "VERIFICATION_CODE_START"
 };
 
 export function register(payload) {
@@ -57,6 +55,13 @@ export function logout(payload) {
 export function forgetPassword(payload) {
   return {
     type: types.FORGET_PASSWORD_START,
+    payload
+  };
+}
+
+export function changePassword(payload) {
+  return {
+    type: types.CHANGE_PASSWORD_START,
     payload
   };
 }

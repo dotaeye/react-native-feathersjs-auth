@@ -1,4 +1,4 @@
-import { PixelRatio, Platform, Dimensions } from "react-native";
+import { PixelRatio, Platform, Dimensions, StyleSheet } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
@@ -7,7 +7,7 @@ export default {
     return width * percent / 100;
   },
   border: {
-    width: 1 / PixelRatio.get(),
+    width: StyleSheet.hairlineWidth,
     radius: 2
   },
 
@@ -26,6 +26,7 @@ export default {
   },
 
   font: {
+    max: 30,
     eg: 24,
     lg: 20,
     md: 18,

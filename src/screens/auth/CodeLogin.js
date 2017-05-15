@@ -47,13 +47,6 @@ class CodeLogin extends React.Component {
     this.props.form.validateFields((error, value) => {
       console.log(error, value);
       this.props.authActions.login({
-        success: () => {
-          console.log("login success");
-          navigate("Home");
-        },
-        fail: err => {
-          console.log(err);
-        },
         data: {
           strategy: "local",
           ...value

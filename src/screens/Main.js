@@ -14,6 +14,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import AppIntro from "react-native-app-intro";
+import { NavigationActions } from "react-navigation";
 
 const customStyles = {
   paginationContainer: {
@@ -51,7 +52,7 @@ class Main extends Component {
   };
 
   render() {
-    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <AppIntro
@@ -262,13 +263,23 @@ class Main extends Component {
         <View style={styles.footer}>
           <TouchableOpacity
             style={[styles.button, styles.buttonPrimary, { marginRight: "7%" }]}
-            onPress={() => navigate("Login")}
+            onPress={() =>
+              navigation.dispatch(
+                NavigationActions.navigate({
+                  routeName: "Login"
+                })
+              )}
           >
             <Text style={styles.buttonPrimaryText}>登录</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, styles.buttonGhost]}
-            onPress={() => navigate("Register")}
+            onPress={() =>
+              navigation.dispatch(
+                NavigationActions.navigate({
+                  routeName: "Register"
+                })
+              )}
           >
             <Text style={styles.buttonGhostText}>注册</Text>
           </TouchableOpacity>

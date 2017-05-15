@@ -67,13 +67,6 @@ class Register extends React.Component {
     this.props.form.validateFields((error, value) => {
       console.log(error, value);
       this.props.authActions.register({
-        success: () => {
-          navigate("Home");
-          console.log("login success");
-        },
-        fail: err => {
-          console.log(err);
-        },
         data: value
       });
     });

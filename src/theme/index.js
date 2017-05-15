@@ -8,15 +8,28 @@ const commonStyles = StyleSheet.create({
     backgroundColor: color.background.white
   },
   flexDirectionColumn: {
-    flexDirection: "column"
+    flexDirection: "column",
+    justifyContent: "flex-start"
   },
   flexDirectionRow: {
     flexDirection: "row"
   }
 });
 
+const navButton = {
+  Back: {
+    icon: {
+      name: "ios-arrow-back-outline",
+      size: size.font.lg,
+      color: color.font.body
+    },
+    text: "返回"
+  }
+};
+
 module.exports = {
   color,
   size,
-  commonStyles
+  commonStyles,
+  navButton
 };

@@ -1,4 +1,5 @@
 import { put, take, call, fork } from "redux-saga/effects";
+import { NavigationActions } from "react-navigation";
 import { types } from "../actions/auth";
 import { STORAGE } from "../configs";
 import Client from "../utils/Client";
@@ -9,14 +10,11 @@ function* login(payload) {
   const { data, success, throwError } = payload;
   try {
     const token = yield Client.authenticate(data);
-    yield call(Storage.save, STORAGE.TOKEN_KEY, token);
     yield put({
       type: types.LOGIN_SUCCESS,
       payload: token
     });
-    if (success) {
-      yield call(success);
-    }
+    yield put(NavigationActions.navigate({ routeName: "Home" }));
   } catch (error) {
     if (throwError) {
       throw error;
@@ -29,12 +27,10 @@ function* login(payload) {
   }
 }
 
-function* logout({ success }) {
-  Storage.remove(STORAGE.TOKEN_KEY);
+function* logout() {
+  yield Client.logout();
   yield put({ type: "RESET_STATE" });
-  if (success) {
-    yield call(success);
-  }
+  yield put(NavigationActions.navigate({ routeName: "Main" }));
 }
 
 function* verificationCode(payload) {
@@ -46,11 +42,10 @@ function* verificationCode(payload) {
   }
 }
 
-function* register({ success, fail, data }) {
+function* register({ data }) {
   try {
     const user = yield Client.service("users").create(data);
     yield login({
-      success,
       throwError: true,
       data: {
         phone: user.phone,
@@ -63,9 +58,6 @@ function* register({ success, fail, data }) {
       type: types.REGISTER_SUCCESS
     });
   } catch (error) {
-    if (fail) {
-      yield call(fail, error);
-    }
     yield put({
       type: types.REGISTER_FAIL
     });
@@ -73,24 +65,36 @@ function* register({ success, fail, data }) {
   }
 }
 
-function* forgetPassword({ success, fail, data }) {
+function* forgetPassword({ data }) {
   try {
-    console.log(data);
     const result = yield Client.service("users").patch(null, data);
-    console.log(result);
     yield put({
       type: types.FORGET_PASSWORD_SUCCESS
     });
-    if (success) {
-      Message.success("重置密码成功");
-      yield call(success);
-    }
+    Message.success("重置密码成功");
+    yield put(NavigationActions.navigate({ routeName: "Login" }));
   } catch (error) {
     if (fail) {
       yield call(fail, error);
     }
     yield put({
       type: types.FORGET_PASSWORD_FAIL
+    });
+    Message.error(error);
+  }
+}
+
+function* changePassword({ success, data }) {
+  try {
+    const result = yield Client.service("users").patch(null, data);
+    yield put({
+      type: types.CHANGE_PASSWORD_SUCCESS
+    });
+    Message.success("重置密码成功");
+    yield put(NavigationActions.back());
+  } catch (error) {
+    yield put({
+      type: types.CHANGE_PASSWORD_FAIL
     });
     Message.error(error);
   }
@@ -131,5 +135,12 @@ export function* watchForgetPasswordFlow() {
   while (true) {
     const { payload } = yield take(types.FORGET_PASSWORD_START);
     yield fork(forgetPassword, payload);
+  }
+}
+
+export function* watchChangePasswordFlow() {
+  while (true) {
+    const { payload } = yield take(types.CHANGE_PASSWORD_START);
+    yield fork(changePassword, payload);
   }
 }

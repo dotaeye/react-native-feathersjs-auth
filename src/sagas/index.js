@@ -9,6 +9,7 @@ export default function* rootSaga() {
     fork(auth.watchLoginFlow),
     fork(auth.watchRegisterFlow),
     fork(auth.watchForgetPasswordFlow),
+    fork(auth.watchChangePasswordFlow),
     fork(auth.watchLogoutFlow),
     fork(auth.watchVerificationCodeFlow)
   ];
